@@ -1,0 +1,33 @@
+LDAP_HOST = '127.0.0.1'
+# This needs to be a bind user's DN with rights to read all the data about users that show up in any
+# group filters and it also needs the power to create and manage groups
+LDAP_USERNAME = ''
+LDAP_PASSWORD = ''
+LDAP_BASEDN = 'dc=mozilla'
+LDAP_GROUPS = [
+    ### Add groups with the following format:
+    # {
+    #     'name': 'cn=group_name,ou=groups,dc=mozilla',
+    #     'search_filter': '(attribute=value)',
+    #     'base': 'o=com,dc=mozilla',
+    #     'never_add_exceptions': [
+    #         'mail=user@mozilla.com,o=com,dc=mozilla',
+    #         'mail=user2@mozilla.com,o=com,dc=mozilla'
+    #     ],
+    #     'always_add_exceptions': [
+    #         'mail=user3@mozilla.com,o=com,dc=mozilla',
+    #         'mail=user4@mozilla.com,o=com,dc=mozilla'
+    #     ],
+    #     'nested_groups': [
+    #         {
+    #             'group': 'cn=vpn_infra,ou=groups,dc=mozilla',
+    #             'attributes': ['member', 'ipHostNumber']
+    #         },
+    #         {
+    #             'group': 'cn=vpn_admin,ou=groups,dc=mozilla',
+    #             'attributes': ['member', 'ipHostNumber']
+    #         }
+    #     ]
+    #}
+    ### Only name and (search_filter or nested_groups) are required. Can't have
+    ### the same user in both "always_add_exceptions" and "never_add_exceptions"
