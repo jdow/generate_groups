@@ -31,3 +31,4 @@ LDAP_GROUPS = [
     #}
     ### Only name and (search_filter or nested_groups) are required. Can't have
     ### the same user in both "always_add_exceptions" and "never_add_exceptions"
+]
