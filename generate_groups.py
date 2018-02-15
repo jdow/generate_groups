@@ -180,6 +180,24 @@ def main(prog_args = None):
             group_dn = ldap_group['name']
 
         try:
+            ldap_group['mail']
+        except KeyError:
+            if verbose:
+                print 'No mail attribute for %s' % group_dn
+            mail = []
+        else:
+            mail = ldap_group['mail']
+
+        try:
+            ldap_group['zimbraAlias']
+        except KeyError:
+            if verbose:
+                print 'No zimbraAlias alias attribute for %s' % group_dn
+            zimbraAlias = []
+        else:
+            zimbraAlias = ldap_group['zimbraAlias']
+
+        try:
             ldap_group['search_filter']
         except KeyError:
             if verbose:
@@ -249,7 +267,10 @@ def main(prog_args = None):
         ldap_group_filter_attributes = {}
         ldap_scm_attributes = {}
         ldap_total_attributes = {}
-        objectclasses = ['groupOfNames', 'top']
+        if mail or zimbraAlias:
+            objectclasses = ['groupOfNames', 'top', 'mailObject']
+        else:
+            objectclasses = ['groupOfNames', 'top']
 
         # This loop is to ensure that we don't end up in an ambiguous situation
         # where someone adds the same user to both exceptions lists for a group
@@ -311,6 +332,18 @@ def main(prog_args = None):
                 except (KeyError):
                     ldap_total_attributes[key] = []
                 ldap_total_attributes[key].extend(dicts[key])
+        if mail:
+            try:
+                ldap_total_attributes['mail']
+            except (KeyError):
+                ldap_total_attributes['mail'] = []
+            ldap_total_attributes['mail'].extend(mail)
+        if zimbraAlias:
+            try:
+                ldap_total_attributes['zimbraAlias']
+            except (KeyError):
+                ldap_total_attributes['zimbraAlias'] = []
+            ldap_total_attributes['zimbraAlias'].extend(zimbraAlias)
         # The rest here is the same for SCM and config file groups
 
         # Finally actually add users to the group

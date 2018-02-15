@@ -10,6 +10,8 @@ LDAP_GROUPS = [
     #     'name': 'cn=group_name,ou=groups,dc=mozilla',
     #     'search_filter': '(attribute=value)',
     #     'base': 'o=com,dc=mozilla',
+    #     'mail': ['eu-test@mozilla.com'],
+    #     'zimbraAlias': ['eu-test-alias@mozilla.com'],
     #     'never_add_exceptions': [
     #         'mail=user@mozilla.com,o=com,dc=mozilla',
     #         'mail=user2@mozilla.com,o=com,dc=mozilla'
